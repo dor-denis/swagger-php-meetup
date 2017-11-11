@@ -1,0 +1,22 @@
+get:
+  operationId: getParties
+  description: Get all available parties around you. **Don't party too much ;)**
+  parameters:
+  - $ref: '../components/parameters/index.yaml#/PartyStartDateParameter'
+  - $ref: '../components/parameters/index.yaml#/LocationParameter'
+  - $ref: '../components/parameters/index.yaml#/PaginationPageParameter'
+  responses:
+    '2XX':
+      $ref: '../components/responses/index.yaml#/PartyListResponse'
+    '4XX':
+      $ref: '../components/responses/index.yaml#/BadRequestResponse'
+post:
+  operationId: createParty
+  description: Organize a party
+  requestBody:
+    $ref: '../components/requestBodies/index.yaml#/createPartyRequestBody'
+  responses:
+    '2XX':
+      $ref: '../components/responses/index.yaml#/PartyResponse'
+    '4XX':
+      $ref: '../components/responses/index.yaml#/BadRequestResponse'

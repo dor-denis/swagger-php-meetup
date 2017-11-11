@@ -1,0 +1,11 @@
+PartyExample:
+  summary: Example Party object
+  description: Party object is the *main* part of the API. It represesents organized party
+  value:
+    id: 1
+    title: Example party
+    description: Description of the party
+    theme: If party is themed - specify it here
+    place: How to find the party
+    time: When party starts
+    maxPeople: 10

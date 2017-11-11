@@ -1,0 +1,8 @@
+/party:
+  $ref: ./parties.yaml
+/party/{partyId}:
+  $ref: ./party.yaml
+/user:
+  $ref: ./users.yaml
+/user/{userId}:
+  $ref: ./user.yaml

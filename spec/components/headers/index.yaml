@@ -1,0 +1,16 @@
+X-Pagination-Total-Count:
+  description: Total count of objects in paginated response
+  schema:
+    type: integer
+X-Pagination-Page-Count:
+  description: Total count of pages in paginated response
+  schema:
+    type: integer
+X-Pagination-Current-Page:
+  description: Current page of paginated response
+  schema:
+    type: integer
+X-Pagination-Per-Page:
+  description: How many objects are represented in one page of paginated response
+  schema:
+    type: integer

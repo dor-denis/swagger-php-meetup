@@ -1,0 +1,66 @@
+PartyResponse:
+  description: Response with a single party
+  content:
+    application/json:
+      schema:
+        $ref: '../schemas/index.yaml#/Party'
+  links:
+    author:
+      operationId: getUser
+      parameters:
+        userId: $response.body#/author
+    attendees:
+      operationId: getUsers
+      parameters:
+        userId: $response.body#/attendees
+PartyListResponse:
+  description: A list of parties
+  content:
+    application/json:
+      schema:
+        type: array
+        items:
+          $ref: '../schemas/index.yaml#/Party'
+  headers:
+    X-Pagination-Total-Count:
+      $ref: '../headers/index.yaml#/X-Pagination-Total-Count'
+    X-Pagination-Page-Count:
+      $ref: '../headers/index.yaml#/X-Pagination-Page-Count'
+    X-Pagination-Current-Page:
+      $ref: '../headers/index.yaml#/X-Pagination-Current-Page'
+    X-Pagination-Per-Page:
+      $ref: '../headers/index.yaml#/X-Pagination-Per-Page'
+  links:
+    author:
+      operationId: getUser
+      parameters:
+        userId: $response.body#/author
+    attendees:
+      operationId: getUsers
+      parameters:
+        userId: $response.body#/attendees
+UserResponse:
+  description: Response with a single user
+  content:
+    application/json:
+      schema:
+        $ref: '../schemas/index.yaml#/User'
+UserListResponse:
+  description: A list of users
+  content:
+    application/json:
+      schema:
+        type: array
+        items:
+          $ref: '../schemas/index.yaml#/User'
+  headers:
+    X-Pagination-Total-Count:
+      $ref: '../headers/index.yaml#/X-Pagination-Total-Count'
+    X-Pagination-Page-Count:
+      $ref: '../headers/index.yaml#/X-Pagination-Page-Count'
+    X-Pagination-Current-Page:
+      $ref: '../headers/index.yaml#/X-Pagination-Current-Page'
+    X-Pagination-Per-Page:
+      $ref: '../headers/index.yaml#/X-Pagination-Per-Page'
+BadRequestResponse:
+  description: Something is wrong with response

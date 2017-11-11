@@ -1,0 +1,13 @@
+url: https://{accountName}.example.com:{port}/{basePath}
+  description: The endpoint of the API
+  variables:
+    accountName:
+      default: demo
+      description: Your *Party API* client's account name
+    port:
+      enum:
+        - '8443'
+        - '443'
+      default: '8443'
+    basePath:
+  default: v2

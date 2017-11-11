@@ -1,0 +1,9 @@
+createPartyRequestBody:
+  description: Request used to create a new party
+  content:
+    application/json:
+      schema:
+        $ref: '../schemas/index.yaml#/Party'
+      example:
+        $ref: '../examples/index.yaml#/PartyExample'
+  required: true

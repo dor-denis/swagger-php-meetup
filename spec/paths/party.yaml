@@ -1,0 +1,20 @@
+get:
+  operationId: getParty
+  description: Get information about a single party
+  parameters:
+  - $ref: '../components/parameters/index.yaml#/PartyIdParameter'
+  responses:
+    '2XX':
+      $ref: '../components/responses/index.yaml#/PartyResponse'
+    '4XX':
+      $ref: '../components/responses/index.yaml#/BadRequestResponse'
+patch:
+  operationId: updateParty
+  description: Update existing party
+  requestBody:
+    $ref: '../components/requestBodies/index.yaml#/createPartyRequestBody'
+  responses:
+    '2XX':
+      $ref: '../components/responses/index.yaml#/PartyResponse'
+    '4XX':
+      $ref: '../components/responses/index.yaml#/BadRequestResponse'

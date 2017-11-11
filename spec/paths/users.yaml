@@ -1,0 +1,11 @@
+get:
+  operationId: getUsers
+  description: Retrieve information about all users
+  parameters:
+    - $ref: '../components/parameters/index.yaml#/LocationParameter'
+    - $ref: '../components/parameters/index.yaml#/PaginationPageParameter'
+  responses:
+    '2XX':
+      $ref: '../components/responses/index.yaml#/UserListResponse'
+    '4XX':
+      $ref: '../components/responses/index.yaml#/BadRequestResponse'

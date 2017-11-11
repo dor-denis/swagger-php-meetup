@@ -1,0 +1,35 @@
+PartyIdParameter:
+  name: partyId
+  in: path
+  description: Internal Party ID to fetch
+  required: true
+  schema:
+    type: integer
+UserIdParameter:
+  name: userId
+  in: path
+  description: Internal User ID to fetch
+  required: true
+  schema:
+    type: integer
+LocationParameter:
+  name: location
+  in: query
+  description: Location string (for example, **Munich, Germany**)
+  required: true
+  schema:
+    type: integer
+PartyStartDateParameter:
+  name: partyStartDate
+  description: Start date filter
+  in: query
+  schema:
+    type: string
+    format: datetime
+PaginationPageParameter:
+  name: Page
+  description: Specify a page of paginated result
+  in: header
+  required: false
+  schema:
+      type: integer

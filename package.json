@@ -1,0 +1,11 @@
+{
+  "name": "partyfinder",
+  "version": "1.0.0",
+  "description": "Find your party!",
+  "main": "compileSpec.js",
+  "author": "Denys Dorofeiev (dor.denis.de@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "json-schema-ref-parser": "^4.0.4"
+  }
+}
