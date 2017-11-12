@@ -6,6 +6,7 @@
   "author": "Denys Dorofeiev (dor.denis.de@gmail.com)",
   "license": "MIT",
   "devDependencies": {
-    "json-schema-ref-parser": "^4.0.4"
+    "json-schema-ref-parser": "^4.0.4",
+    "json2yaml": "^1.1.0"
   }
 }

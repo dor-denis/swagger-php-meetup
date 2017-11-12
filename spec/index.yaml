@@ -2,7 +2,9 @@ openapi: 3.0.0
 info:
   $ref: ./info/index.yaml
 servers:
-  - $ref: ./info/index.yaml
+  - $ref: ./servers/index.yaml
+security:
+  - defaultSecuritySchema: [read:parties write:parties]
 components:
   schemas:
     $ref: ./components/schemas/index.yaml
@@ -16,5 +18,7 @@ components:
     $ref: ./components/responses/index.yaml
   headers:
     $ref: ./components/headers/index.yaml
+  securitySchemes:
+    $ref: ./components/securitySchemes/index.yaml
 paths:
     $ref: ./paths/index.yaml
