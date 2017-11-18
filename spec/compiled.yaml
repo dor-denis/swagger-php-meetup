@@ -1,0 +1,307 @@
+---
+  openapi: "3.0.0"
+  info: 
+    title: "Party Finder"
+    version: "1.0.0"
+    description: "Find your **party**!"
+    license: 
+      name: "Apache 2.0"
+      url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  servers: 
+    - 
+      url: "https://{accountName}.example.com:{port}/{basePath}"
+      description: "The endpoint of the API"
+      variables: 
+        accountName: 
+          default: "demo"
+          description: "Your *Party API* client's account name"
+        port: 
+          enum: 
+            - "8443"
+            - "443"
+          default: "8443"
+        basePath: 
+          default: "v2"
+  security: 
+    - 
+      defaultSecuritySchema: 
+        - "read:parties write:parties"
+  components: 
+    schemas: 
+      Party: 
+        type: "object"
+        properties: 
+          id: 
+            type: "integer"
+            format: "int64"
+          title: 
+            type: "string"
+          description: 
+            type: "string"
+          theme: 
+            type: "string"
+          place: 
+            type: "string"
+          time: 
+            type: "string"
+            format: "date-time"
+          maxPeople: 
+            type: "integer"
+            format: "int64"
+        example: 
+          $ref: "#/components/examples/PartyExample"
+      User: 
+        type: "object"
+        properties: 
+          id: 
+            type: "integer"
+            format: "int64"
+          username: 
+            type: "string"
+          name: 
+            type: "string"
+          parties: 
+            type: "array"
+            items: 
+              type: "integer"
+              format: "int64"
+        example: 
+          id: 1
+          username: "max1990"
+          name: "Max Mustermann"
+          parties: 
+            - 1
+            - 2
+            - 3
+    parameters: 
+      PartyIdParameter: 
+        name: "partyId"
+        in: "path"
+        description: "Internal Party ID to fetch"
+        required: true
+        schema: 
+          type: "integer"
+      UserIdParameter: 
+        name: "userId"
+        in: "path"
+        description: "Internal User ID to fetch"
+        required: true
+        schema: 
+          type: "integer"
+      LocationParameter: 
+        name: "location"
+        in: "query"
+        description: "Location string (for example, **Munich, Germany**)"
+        required: true
+        schema: 
+          type: "integer"
+      PartyStartDateParameter: 
+        name: "partyStartDate"
+        description: "Start date filter"
+        in: "query"
+        schema: 
+          type: "string"
+          format: "datetime"
+      PaginationPageParameter: 
+        name: "Page"
+        description: "Specify a page of paginated result"
+        in: "header"
+        required: false
+        schema: 
+          type: "integer"
+    examples: 
+      PartyExample: 
+        summary: "Example Party object"
+        description: "Party object is the *main* part of the API. It represesents organized party"
+        value: 
+          id: 1
+          title: "Example party"
+          description: "Description of the party"
+          theme: "If party is themed - specify it here"
+          place: "How to find the party"
+          time: "When party starts"
+          maxPeople: 10
+    requestBodies: 
+      createPartyRequestBody: 
+        description: "Request used to create a new party"
+        content: 
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/Party"
+            example: 
+              $ref: "#/components/examples/PartyExample"
+        required: true
+    responses: 
+      PartyResponse: 
+        description: "Response with a single party"
+        content: 
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/Party"
+        links: 
+          author: 
+            operationId: "getUser"
+            parameters: 
+              userId: "$response.body#/author"
+          attendees: 
+            operationId: "getUsers"
+            parameters: 
+              userId: "$response.body#/attendees"
+      PartyListResponse: 
+        description: "A list of parties"
+        content: 
+          application/json: 
+            schema: 
+              type: "array"
+              items: 
+                $ref: "#/components/schemas/Party"
+        headers: 
+          X-Pagination-Total-Count: 
+            $ref: "#/components/headers/X-Pagination-Total-Count"
+          X-Pagination-Page-Count: 
+            $ref: "#/components/headers/X-Pagination-Page-Count"
+          X-Pagination-Current-Page: 
+            $ref: "#/components/headers/X-Pagination-Current-Page"
+          X-Pagination-Per-Page: 
+            $ref: "#/components/headers/X-Pagination-Per-Page"
+        links: 
+          author: 
+            operationId: "getUser"
+            parameters: 
+              userId: "$response.body#/author"
+          attendees: 
+            operationId: "getUsers"
+            parameters: 
+              userId: "$response.body#/attendees"
+      UserResponse: 
+        description: "Response with a single user"
+        content: 
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/User"
+      UserListResponse: 
+        description: "A list of users"
+        content: 
+          application/json: 
+            schema: 
+              type: "array"
+              items: 
+                $ref: "#/components/schemas/User"
+        headers: 
+          X-Pagination-Total-Count: 
+            $ref: "#/components/headers/X-Pagination-Total-Count"
+          X-Pagination-Page-Count: 
+            $ref: "#/components/headers/X-Pagination-Page-Count"
+          X-Pagination-Current-Page: 
+            $ref: "#/components/headers/X-Pagination-Current-Page"
+          X-Pagination-Per-Page: 
+            $ref: "#/components/headers/X-Pagination-Per-Page"
+      BadRequestResponse: 
+        description: "Something is wrong with response"
+    headers: 
+      X-Pagination-Total-Count: 
+        description: "Total count of objects in paginated response"
+        schema: 
+          type: "integer"
+      X-Pagination-Page-Count: 
+        description: "Total count of pages in paginated response"
+        schema: 
+          type: "integer"
+      X-Pagination-Current-Page: 
+        description: "Current page of paginated response"
+        schema: 
+          type: "integer"
+      X-Pagination-Per-Page: 
+        description: "How many objects are represented in one page of paginated response"
+        schema: 
+          type: "integer"
+    securitySchemes: 
+      defaultSecurityScheme: 
+        type: "oauth2"
+        flows: 
+          authorizationCode: 
+            authorizationUrl: "https://example.com/api/oauth/dialog"
+            tokenUrl: "https://example.com/api/oauth/token"
+            scopes: 
+              write:pets: "modify parties in your account"
+              read:pets: "read your parties"
+  paths: 
+    /party: 
+      get: 
+        operationId: "getParties"
+        description: "Get all available parties around you. **Don't party too much ;)**"
+        parameters: 
+          - 
+            $ref: "#/components/parameters/PartyStartDateParameter"
+          - 
+            $ref: "#/components/parameters/LocationParameter"
+          - 
+            $ref: "#/components/parameters/PaginationPageParameter"
+        responses: 
+          2XX: 
+            $ref: "#/components/responses/PartyListResponse"
+          4XX: 
+            $ref: "#/components/responses/BadRequestResponse"
+      post: 
+        operationId: "createParty"
+        description: "Organize a party"
+        requestBody: 
+          $ref: "#/components/requestBodies/createPartyRequestBody"
+        responses: 
+          2XX: 
+            $ref: "#/components/responses/PartyResponse"
+          4XX: 
+            $ref: "#/components/responses/BadRequestResponse"
+    /party/{partyId}: 
+      get: 
+        operationId: "getParty"
+        description: "Get information about a single party"
+        parameters: 
+          - 
+            $ref: "#/components/parameters/PartyIdParameter"
+        responses: 
+          2XX: 
+            $ref: "#/components/responses/PartyResponse"
+          4XX: 
+            $ref: "#/components/responses/BadRequestResponse"
+      patch: 
+        operationId: "updateParty"
+        description: "Update existing party"
+        requestBody: 
+          $ref: "#/components/requestBodies/createPartyRequestBody"
+        responses: 
+          2XX: 
+            $ref: "#/components/responses/PartyResponse"
+          4XX: 
+            $ref: "#/components/responses/BadRequestResponse"
+    /user: 
+      get: 
+        operationId: "getUsers"
+        description: "Retrieve information about all users"
+        parameters: 
+          - 
+            $ref: "#/components/parameters/LocationParameter"
+          - 
+            $ref: "#/components/parameters/PaginationPageParameter"
+        responses: 
+          2XX: 
+            $ref: "#/components/responses/UserListResponse"
+          4XX: 
+            $ref: "#/components/responses/BadRequestResponse"
+    /user/{userId}: 
+      get: 
+        operationId: "getUser"
+        description: "Retrieve information about a single user"
+        parameters: 
+          - 
+            $ref: "#/components/parameters/UserIdParameter"
+          - 
+            $ref: "#/components/parameters/LocationParameter"
+          - 
+            $ref: "#/components/parameters/PaginationPageParameter"
+        responses: 
+          2XX: 
+            $ref: "#/components/responses/UserResponse"
+          4XX: 
+            $ref: "#/components/responses/BadRequestResponse"
+
